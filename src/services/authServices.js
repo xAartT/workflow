@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt'
 export async function loginAction(login, senha) {
 
     const result = await pool.query(
-        'select id, empresa_id, nome from usuarios where login = $1',
+        'select * from usuarios where login = $1',
         [login]
     )
 
