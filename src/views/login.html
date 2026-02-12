@@ -44,6 +44,7 @@
 
             <div style="margin-top: 25px; display: flex; justify-content: end;">
                 <button id="btnLogin" class="simpui-btn primary sm">Entrar</button>
+                <div id="simpui-toast-container"></div>
             </div>
 
         </form>
@@ -56,11 +57,17 @@
 
     <script>
 
+        let carregando = false;
+
         async function handleLogin(event) {
+            if (carregando) {
+                return;
+            }
             event.preventDefault();
             const login = document.getElementById('inputLogin').value;
             const senha = document.getElementById('inputSenha').value;
 
+            carregando = true;
             const response = await fetch('/api/login', {
                 method: 'POST',
                 headers: {
@@ -69,7 +76,13 @@
                 body: JSON.stringify({ login, senha })
             });
 
-            console.log('Resposta do servidor:', response);
+            if (response.status === 200) {
+                showSimpuiToast('Login realizado com sucesso', 'Você foi autenticado no sistema')
+            } else {
+                showSimpuiToast('Erro', 'Login ou senha inválidos')
+            }
+
+            carregando = false;
         }
 
         document.getElementById('btnLogin').addEventListener('click', handleLogin);

@@ -27,3 +27,9 @@ export async function loginAction(login, senha) {
         tipo: usuario.tipo
     }
 }
+
+export async function salvarToken(usuarioId, token) {
+    const result = await pool.query("update usuarios set token = $1 where id = $2", [token, usuarioId])
+
+    return result.rowCount > 0;
+}

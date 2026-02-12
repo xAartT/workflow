@@ -31,6 +31,8 @@ export async function login(req, res) {
             sameSite: 'lax'
         })
 
+        await authServices.salvarToken(usuario.id, token);
+
         res.json({ mensagem: 'Login realizado com sucesso' })
 
     } catch (error) {
