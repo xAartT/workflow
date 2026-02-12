@@ -77,9 +77,10 @@
             });
 
             if (response.status === 200) {
-                showSimpuiToast('Login realizado com sucesso', 'Você foi autenticado no sistema')
+                showSimpuiToast('Login realizado com sucesso', 'Você foi autenticado no sistema');
+                window.location.href = '/dashboard';
             } else {
-                showSimpuiToast('Erro', 'Login ou senha inválidos')
+                showSimpuiToast('Erro', 'Login ou senha inválidos');
             }
 
             carregando = false;

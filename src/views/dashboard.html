@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard | Workflow</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/css/simpui.css">
+</head>
+
+<body style="margin:0; display:flex; height:100vh; font-family:Arial, Helvetica, sans-serif;">
+
+    <aside style="
+        width:220px;
+        background:#797979;
+        color:white;
+        display:flex;
+        flex-direction:column;
+        padding:20px 15px;
+    ">
+        <h2 style="margin:0 0 30px 0;">Workflow</h2>
+
+        <nav style="display:flex; flex-direction:column; gap:10px;">
+            <a href="/dashboard" style="color:white; text-decoration:none;">📊 Dashboard</a>
+            <a href="/pedidos" style="color:white; text-decoration:none;">📦 Pedidos</a>
+            <a href="/setores" style="color:white; text-decoration:none;">🏭 Setores</a>
+            <a href="/itens" style="color:white; text-decoration:none;">🧾 Itens</a>
+            <a href="/relatorios" style="color:white; text-decoration:none;">📈 Relatórios</a>
+        </nav>
+
+        <div style="margin-top:auto;">
+            <hr style="border:0; border-top:1px solid rgba(255,255,255,0.2); margin:20px 0;">
+            <form method="POST" action="/logout">
+                <button class="simpui-btn danger sm" style="width:100%;">
+                    Sair
+                </button>
+            </form>
+        </div>
+    </aside>
+
+    <div style="flex:1; display:flex; flex-direction:column; background:#f4f6f9;">
+
+        <header style="
+            height:60px;
+            background:white;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:0 20px;
+            box-shadow:0 1px 5px rgba(0,0,0,0.05);
+        ">
+            <div>
+                <strong>Painel Geral</strong>
+            </div>
+
+            <div>
+                <label id="usuarioLabel" style="margin-right:10px;">Olá, Usuário</label>
+            </div>
+        </header>
+
+
+        <main style="padding:25px; overflow:auto;">
+
+            <div id="mainCard" class="simpui-card" style="padding:20px;">
+                <h3>Bem-vindo ao Workflow</h3>
+                <p>
+                    Aqui você poderá acompanhar pedidos, setores e relatórios.
+                </p>
+            </div>
+
+        </main>
+
+    </div>
+
+    <script>
+        async function getNomeUsuario() {
+            const response = await fetch('/api/username');  
+
+            const data = await response.json();
+            if (response.status === 200) {
+                const label = document.getElementById('usuarioLabel');
+                label.textContent = `Olá, ${data.username}`;
+            }
+        }
+
+        async function getTotalPedidos() {
+            const response = await fetch('/api/resumo-pedidos');
+            const data = await response.json();
+            if (response.status === 200) {
+                console.log('Total de Pedidos:', data.total || 0);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await getNomeUsuario();
+            await getTotalPedidos();
+        });
+    </script>
+    <script src="/js/simpui.js"></script>
+</body>
+</html>

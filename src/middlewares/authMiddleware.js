@@ -1,23 +1,23 @@
 import jwt from 'jsonwebtoken'
+import * as service from '../services/infoServices.js'
 
-const JWT_SECRET = 'segredo_super_forte'
+const JWT_SECRET = process.env.JWT_SECRET
 
-export function autenticar(req, res, next) {
+export default function autenticar(req, res, next) {
 
     const token = req.cookies.token
 
     if (!token) {
-        return res.status(401).json({ erro: 'Não autenticado' })
+        return res.redirect('/login');
     }
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET)
 
-        req.usuario = decoded 
+        req.usuario = decoded
 
         next()
-
     } catch (error) {
-        return res.status(401).json({ erro: 'Token inválido' })
+        return res.status(401).json({ erro: 'Token inválido', detalhes: error.message })
     }
 }

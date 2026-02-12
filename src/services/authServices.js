@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt'
 export async function loginAction(login, senha) {
 
     const result = await pool.query(
-        'select * from usuarios where login = $1',
+        'select id, empresa_id, nome from usuarios where login = $1',
         [login]
     )
 
@@ -23,8 +23,7 @@ export async function loginAction(login, senha) {
     return {
         id: usuario.id,
         empresa_id: usuario.empresa_id,
-        nome: usuario.nome,
-        tipo: usuario.tipo
+        nome: usuario.nome
     }
 }
 
@@ -32,4 +31,4 @@ export async function salvarToken(usuarioId, token) {
     const result = await pool.query("update usuarios set token = $1 where id = $2", [token, usuarioId])
 
     return result.rowCount > 0;
-}
+};
