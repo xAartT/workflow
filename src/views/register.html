@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WORKFLOW - Login</title>
+    <link rel="stylesheet" href="/css/simpui.css">
+    <link rel="stylesheet" href="/css/simpicker.css">
+    <script src="/js/simpicker.js"></script>
+</head>
+<body style="display:flex; align-items:center; justify-content:center; height:98vh;">
+
+    <div class="simpui-card" style="width: 350px; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        
+        <h2 style="text-align:center; margin-bottom:20px;">
+            Criar Conta
+        </h2>
+
+        <form>
+
+            <div class="simpui-form-group">
+                <input 
+                    type="text" 
+                    name="empresa" 
+                    class="simpui-input" 
+                    placeholder="Nome da empresa" 
+                    required
+                />
+                <div class="simpui-error">Nome da empresa é obrigatório</div>
+            </div>
+
+            <div class="simpui-form-group" style="margin-top:15px;">
+                <input 
+                    type="text" 
+                    name="documento" 
+                    class="simpui-input" 
+                    placeholder="Documento do responsável" 
+                    required
+                />
+                <div class="simpui-error">Documento é obrigatório</div>
+            </div>
+
+            <div class="simpui-form-group" style="margin-top:15px;">
+                <input 
+                    type="text" 
+                    name="nome" 
+                    class="simpui-input" 
+                    placeholder="Seu nome" 
+                    required
+                />
+                <div class="simpui-error">Nome é obrigatório</div>
+            </div>
+
+            <div class="simpui-form-group" style="margin-top:15px;">
+                <input 
+                    type="email" 
+                    name="email" 
+                    class="simpui-input" 
+                    placeholder="Email" 
+                    required
+                />
+                <div class="simpui-error">Email é obrigatório</div>
+            </div>
+
+            <div class="simpui-form-group" style="margin-top:15px;">
+                <input 
+                    type="text" 
+                    name="login" 
+                    class="simpui-input" 
+                    placeholder="Login" 
+                    required
+                />
+                <div class="simpui-error">Login é obrigatório</div>
+            </div>
+
+            <div class="simpui-form-group" style="margin-top:15px;">
+                <input 
+                    type="password" 
+                    name="senha" 
+                    class="simpui-input" 
+                    placeholder="Senha" 
+                    required
+                />
+                <div class="simpui-error">Senha é obrigatória</div>
+            </div>
+
+            <div style="margin-top: 25px; display: flex; justify-content: end;">
+                <button class="simpui-btn primary sm">Criar Conta</button>
+            </div>
+
+        </form>
+
+        <div style="text-align:center; margin-top:15px; font-size:14px;">
+            Já tem conta? <a href="/login" style="color: rgb(94, 94, 94)">Entrar</a>
+        </div>
+
+    </div>
+
+    <script src="/js/simpui.js"></script>
+</body>
+</html>
