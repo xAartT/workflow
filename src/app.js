@@ -9,6 +9,7 @@ import cookieParser from 'cookie-parser';
 import authRoutes from './routes/authRoutes.js';
 import autenticar from './middlewares/authMiddleware.js';
 import infoRoutes from './routes/infoRoutes.js';
+import setoresRoutes from './routes/setoresRoutes.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -29,6 +30,7 @@ app.use('/api', authRoutes);
 
 // =========== ROTAS PROTEGIDAS ===========
 app.use('/api', autenticar, infoRoutes);
+app.use('/api', autenticar, setoresRoutes);
 
 // =========== VIEWS ===========
 app.get('/login', (req, res) => {
@@ -41,6 +43,10 @@ app.get('/register', (req, res) => {
 
 app.get('/dashboard', autenticar, (req, res) => {
   res.sendFile(path.join(__dirname, '../src/views/dashboard.html'));
+});
+
+app.get('/setores', autenticar, (req, res) => {
+  res.sendFile(path.join(__dirname, '../src/views/setores.html'));
 });
 
 export default app;

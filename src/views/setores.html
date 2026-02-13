@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Setores | Workflow</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/css/simpui.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Efeitos de fundo animados */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            top: -150px;
+            left: -150px;
+            animation: float 8s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            bottom: -100px;
+            right: -100px;
+            animation: float 10s ease-in-out infinite reverse;
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+            50% {
+                transform: translateY(-30px) translateX(30px);
+            }
+        }
+
+        /* Sidebar */
+        aside {
+            width: 240px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            padding: 25px 20px;
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+            animation: slideInLeft 0.5s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        aside h2 {
+            margin: 0 0 35px 0;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 24px;
+        }
+
+        nav {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        nav a {
+            color: #555;
+            text-decoration: none;
+            padding: 12px 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        nav a.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        nav a:active {
+            transform: translateX(3px);
+        }
+
+        .logout-section {
+            margin-top: auto;
+        }
+
+        .logout-section hr {
+            border: 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+
+        .simpui-btn.danger {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;
+            border: none !important;
+            width: 100%;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .simpui-btn.danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4) !important;
+        }
+
+        /* Main Content */
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: transparent;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            height: 70px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+            animation: slideInDown 0.5s ease-out;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        header strong {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            letter-spacing: -0.3px;
+        }
+
+        #usuarioLabel {
+            margin-right: 10px;
+            color: #555;
+            font-weight: 500;
+            padding: 8px 16px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        /* Main Content Area */
+        main {
+            padding: 30px;
+            overflow: auto;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .simpui-card {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 16px !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15) !important;
+            border: 1px solid rgba(255, 255, 255, 0.5) !important;
+            animation: scaleIn 0.5s ease-out;
+            margin-bottom: 25px;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .simpui-card h3 {
+            margin: 0 0 20px 0;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 22px;
+        }
+
+        /* Form Styles */
+        .simpui-input {
+            border-radius: 8px !important;
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0 !important;
+        }
+
+        .simpui-input:focus {
+            border-color: #667eea !important;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
+        }
+
+        .simpui-btn.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            border: none !important;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .simpui-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4) !important;
+        }
+
+        .simpui-btn.primary:active {
+            transform: translateY(0);
+        }
+
+        /* Icon Picker */
+        .icon-picker {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .icon-option {
+            font-size: 24px;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .icon-option:hover {
+            border-color: #667eea;
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .icon-option.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Color Picker */
+        .color-picker {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .color-option {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .color-option:hover {
+            transform: scale(1.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .color-option.selected {
+            border-color: #333;
+            transform: scale(1.15);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Preview */
+        .preview-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 16px;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .preview-badge span {
+            font-size: 22px;
+        }
+
+        /* Lista de Setores */
+        .setores-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .setor-item {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .setor-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .setor-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: white;
+            font-size: 15px;
+        }
+
+        .setor-badge span {
+            font-size: 20px;
+        }
+
+        /* Scrollbar customizada */
+        main::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        main::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        main::-webkit-scrollbar-thumb {
+            background: rgba(102, 126, 234, 0.5);
+            border-radius: 10px;
+        }
+
+        main::-webkit-scrollbar-thumb:hover {
+            background: rgba(102, 126, 234, 0.7);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            aside {
+                width: 200px;
+            }
+            
+            header {
+                padding: 0 15px;
+            }
+            
+            main {
+                padding: 20px 15px;
+            }
+
+            .icon-picker {
+                grid-template-columns: repeat(6, 1fr);
+            }
+
+            .color-picker {
+                grid-template-columns: repeat(6, 1fr);
+            }
+
+            .setores-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside>
+        <h2>Workflow</h2>
+
+        <nav>
+            <a href="/dashboard">📊 Dashboard</a>
+            <a href="/pedidos">📦 Pedidos</a>
+            <a href="/setores" class="active">🏭 Setores</a>
+            <a href="/itens">🧾 Itens</a>
+            <a href="/relatorios">📈 Relatórios</a>
+        </nav>
+
+        <div class="logout-section">
+            <hr>
+            <form method="POST" action="/logout">
+                <button class="simpui-btn danger sm">
+                    Sair
+                </button>
+            </form>
+        </div>
+    </aside>
+
+    <div class="main-wrapper">
+
+        <header>
+            <div>
+                <strong>Gerenciar Setores</strong>
+            </div>
+
+            <div>
+                <label id="usuarioLabel">Olá, Usuário</label>
+            </div>
+        </header>
+
+        <main>
+            <!-- Formulário de Cadastro -->
+            <div class="simpui-card">
+                <h3>Cadastrar Novo Setor</h3>
+                
+                <form id="formSetor">
+                    <div class="simpui-form-group">
+                        <label style="font-weight: 600; margin-bottom: 8px; display: block; color: #555;">Nome do Setor</label>
+                        <input 
+                            id="inputNome"
+                            type="text" 
+                            name="nome" 
+                            class="simpui-input" 
+                            placeholder="Ex: Produção, Vendas, Marketing..." 
+                            required
+                        />
+                        <div class="simpui-error">Nome é obrigatório</div>
+                    </div>
+
+                    <div class="simpui-form-group" style="margin-top: 25px;">
+                        <label style="font-weight: 600; margin-bottom: 8px; display: block; color: #555;">Escolha um Ícone</label>
+                        <input type="hidden" id="inputIcone" name="icone" required>
+                        <div class="icon-picker">
+                            <div class="icon-option" data-icon="🏭">🏭</div>
+                            <div class="icon-option" data-icon="📦">📦</div>
+                            <div class="icon-option" data-icon="🛒">🛒</div>
+                            <div class="icon-option" data-icon="💼">💼</div>
+                            <div class="icon-option" data-icon="📊">📊</div>
+                            <div class="icon-option" data-icon="🎯">🎯</div>
+                            <div class="icon-option" data-icon="🔧">🔧</div>
+                            <div class="icon-option" data-icon="⚙️">⚙️</div>
+                            <div class="icon-option" data-icon="📱">📱</div>
+                            <div class="icon-option" data-icon="💻">💻</div>
+                            <div class="icon-option" data-icon="🎨">🎨</div>
+                            <div class="icon-option" data-icon="📝">📝</div>
+                            <div class="icon-option" data-icon="📈">📈</div>
+                            <div class="icon-option" data-icon="🚀">🚀</div>
+                            <div class="icon-option" data-icon="⭐">⭐</div>
+                            <div class="icon-option" data-icon="🏆">🏆</div>
+                        </div>
+                        <div class="simpui-error">Selecione um ícone</div>
+                    </div>
+
+                    <div class="simpui-form-group" style="margin-top: 25px;">
+                        <label style="font-weight: 600; margin-bottom: 8px; display: block; color: #555;">Escolha uma Cor</label>
+                        <input type="hidden" id="inputCor" name="cor" required>
+                        <div class="color-picker">
+                            <div class="color-option" data-color="#667eea" style="background: #667eea;"></div>
+                            <div class="color-option" data-color="#764ba2" style="background: #764ba2;"></div>
+                            <div class="color-option" data-color="#f093fb" style="background: #f093fb;"></div>
+                            <div class="color-option" data-color="#f5576c" style="background: #f5576c;"></div>
+                            <div class="color-option" data-color="#4facfe" style="background: #4facfe;"></div>
+                            <div class="color-option" data-color="#00f2fe" style="background: #00f2fe;"></div>
+                            <div class="color-option" data-color="#43e97b" style="background: #43e97b;"></div>
+                            <div class="color-option" data-color="#38f9d7" style="background: #38f9d7;"></div>
+                            <div class="color-option" data-color="#fa709a" style="background: #fa709a;"></div>
+                            <div class="color-option" data-color="#fee140" style="background: #fee140;"></div>
+                            <div class="color-option" data-color="#30cfd0" style="background: #30cfd0;"></div>
+                            <div class="color-option" data-color="#a8edea" style="background: #a8edea;"></div>
+                            <div class="color-option" data-color="#ff6b6b" style="background: #ff6b6b;"></div>
+                            <div class="color-option" data-color="#feca57" style="background: #feca57;"></div>
+                            <div class="color-option" data-color="#48dbfb" style="background: #48dbfb;"></div>
+                            <div class="color-option" data-color="#ff9ff3" style="background: #ff9ff3;"></div>
+                        </div>
+                        <div class="simpui-error">Selecione uma cor</div>
+                    </div>
+
+                    <div style="margin-top: 30px;">
+                        <label style="font-weight: 600; margin-bottom: 12px; display: block; color: #555;">Pré-visualização</label>
+                        <div id="preview" class="preview-badge" style="background: #cccccc;">
+                            <span>❓</span>
+                            <span>Nome do Setor</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 30px; display: flex; gap: 10px; justify-content: flex-end;">
+                        <button type="button" id="btnLimpar" class="simpui-btn sm">Limpar</button>
+                        <button type="submit" class="simpui-btn primary sm">Cadastrar</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Lista de Setores -->
+            <div class="simpui-card">
+                <h3>Setores Cadastrados</h3>
+                <div id="setoresList" class="setores-list">
+                    <!-- Setores serão carregados aqui -->
+                </div>
+            </div>
+        </main>
+        
+        <div id="simpui-toast-container"></div>
+    </div>
+
+    <script>
+        let iconeSelecionado = null;
+        let corSelecionada = null;
+
+        // Icon Picker
+        document.querySelectorAll('.icon-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.icon-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                iconeSelecionado = this.getAttribute('data-icon');
+                document.getElementById('inputIcone').value = iconeSelecionado;
+                atualizarPreview();
+            });
+        });
+
+        // Color Picker
+        document.querySelectorAll('.color-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                corSelecionada = this.getAttribute('data-color');
+                document.getElementById('inputCor').value = corSelecionada;
+                atualizarPreview();
+            });
+        });
+
+        // Preview
+        document.getElementById('inputNome').addEventListener('input', atualizarPreview);
+
+        function atualizarPreview() {
+            const nome = document.getElementById('inputNome').value || 'Nome do Setor';
+            const icone = iconeSelecionado || '❓';
+            const cor = corSelecionada || '#cccccc';
+            
+            const preview = document.getElementById('preview');
+            preview.style.background = cor;
+            preview.innerHTML = `<span>${icone}</span><span>${nome}</span>`;
+        }
+
+        // Limpar formulário
+        document.getElementById('btnLimpar').addEventListener('click', function() {
+            document.getElementById('formSetor').reset();
+            document.querySelectorAll('.icon-option').forEach(opt => opt.classList.remove('selected'));
+            document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
+            iconeSelecionado = null;
+            corSelecionada = null;
+            atualizarPreview();
+        });
+
+        // Submit do formulário
+        document.getElementById('formSetor').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const nome = document.getElementById('inputNome').value;
+            const icone = document.getElementById('inputIcone').value;
+            const cor = document.getElementById('inputCor').value;
+
+            if (!icone || !cor) {
+                showSimpuiToast('Atenção', 'Selecione um ícone e uma cor');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/setores', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ nome, icone, cor })
+                });
+
+                if (response.ok) {
+                    showSimpuiToast('Sucesso', 'Setor cadastrado com sucesso!');
+                    document.getElementById('btnLimpar').click();
+                    carregarSetores();
+                } else {
+                    showSimpuiToast('Erro', 'Erro ao cadastrar setor');
+                }
+            } catch (error) {
+                showSimpuiToast('Erro', 'Erro ao cadastrar setor');
+            }
+        });
+
+        async function carregarSetores() {
+            try {
+                const response = await fetch('/api/setores');
+                const setores = await response.json();
+                
+                const lista = document.getElementById('setoresList');
+                
+                if (setores.length === 0) {
+                    lista.innerHTML = '<p style="color: #999; text-align: center; padding: 20px;">Nenhum setor cadastrado ainda.</p>';
+                    return;
+                }
+
+                lista.innerHTML = setores.map(setor => `
+                    <div class="setor-item">
+                        <div class="setor-badge" style="background: ${setor.cor};">
+                            <span>${setor.icone}</span>
+                            <span>${setor.nome}</span>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Erro ao carregar setores:', error);
+            }
+        }
+
+        async function getNomeUsuario() {
+            try {
+                const response = await fetch('/api/username');  
+                const data = await response.json();
+                if (response.status === 200) {
+                    const label = document.getElementById('usuarioLabel');
+                    label.textContent = `Olá, ${data.username}`;
+                }
+            } catch (error) {
+                console.error('Erro ao carregar usuário:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await getNomeUsuario();
+            await carregarSetores();
+        });
+    </script>
+    <script src="/js/simpui.js"></script>
+</body>
+</html>
