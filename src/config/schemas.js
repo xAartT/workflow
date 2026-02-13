@@ -325,8 +325,8 @@ CREATE TABLE public.setores (
     id integer NOT NULL,
     empresa_id integer NOT NULL,
     nome character varying(50) NOT NULL,
-    ordem integer NOT NULL,
-    tempo_estimado_minutos integer DEFAULT 0
+    cor character varying(20),
+    icone character varying(1)
 );
 
 
