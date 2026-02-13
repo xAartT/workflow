@@ -730,10 +730,10 @@ ALTER TABLE ONLY public.pedidos
     ADD CONSTRAINT pk_pedidos_to_empresas FOREIGN KEY (empresa_id) REFERENCES public.empresas(id);
 
 
-INSERT INTO EMPRESAS (nome, documento_responsavel, valor_mensalidade, quantidade_usuarios)
+INSERT INTO public.empresas (nome, documento_responsavel, valor_mensalidade, quantidade_usuarios)
 VALUES ('Empresa Exemplo', '12345678900', 99.90, 10);
 
-INSERT INTO USUARIOS (empresa_id, nome, email, login, senha_hash, tipo)
+INSERT INTO public.usuarios (empresa_id, nome, email, login, senha_hash, tipo)
 VALUES (1, 'Administrador', 'admin@empresaexemplo.com', 'admin', '$2a$12$rOzF2/jeNxV/iUFlgLPB3OTz4BRxUcuTNVqMw8GLg8LElannaoFwm', 'A');
 `;
 
